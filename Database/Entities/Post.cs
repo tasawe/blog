@@ -11,7 +11,7 @@
 
         // Relacionamento
         public string AuthorId { get; set; }
-        public virtual AppUser Author { get; set; }
+        public virtual User Author { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
     }

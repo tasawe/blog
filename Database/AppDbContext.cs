@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace blog.Database
 {
-    public class AppUser : IdentityUser
+    public class User : IdentityUser
     {
     }
 
-    public class AppDbContext : IdentityDbContext<AppUser>
+    public class AppDbContext : IdentityDbContext<User>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
         public DbSet<Post> Posts { get; set; }

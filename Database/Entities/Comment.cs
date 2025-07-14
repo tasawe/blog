@@ -8,7 +8,7 @@
 
         // Relacionamento com o usuário
         public string AuthorId { get; set; }
-        public virtual AppUser Author { get; set; }
+        public virtual User Author { get; set; }
 
         // Relacionamento com o post
         public int PostId { get; set; }
