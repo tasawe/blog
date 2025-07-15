@@ -13,10 +13,19 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
         options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
     });
-builder.Services.AddAuthentication();
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme).AddCookie(IdentityConstants.ApplicationScheme, options =>
+    {
+        options.LoginPath = "/auth/login";
+        options.AccessDeniedPath = "/auth/login";
+    });
 builder.Services.AddAuthorization();
 
-builder.Services.AddIdentityApiEndpoints<User>()
+builder.Services.AddIdentityCore<User>(options =>
+{
+    options.User.RequireUniqueEmail = true;
+})
+    .AddSignInManager<SignInManager<User>>()
+    .AddUserManager<UserManager<User>>()
     .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddControllersWithViews();
@@ -34,7 +43,6 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapIdentityApi<User>();
 app.MapControllers();
 
 app.Run();
